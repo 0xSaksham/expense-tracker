@@ -1,22 +1,26 @@
 package com.expensetracker.backend.controller;
 
 import com.expensetracker.backend.dto.UserRegisterRequest;
-import com.expensetracker.backend.entity.User;
 import com.expensetracker.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public User register(@RequestBody UserRegisterRequest request){
-        return userService.register(request);
+    public ResponseEntity<String> register(@RequestBody UserRegisterRequest request){
+        try {
+            String message = userService.registerUser(request);
+            return ResponseEntity.ok(message);
+        }
+        catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

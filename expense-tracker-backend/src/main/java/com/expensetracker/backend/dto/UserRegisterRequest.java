@@ -1,12 +1,8 @@
 package com.expensetracker.backend.dto;
 
-import lombok.*;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data
 public class UserRegisterRequest {
     private String name;
     private String email;
